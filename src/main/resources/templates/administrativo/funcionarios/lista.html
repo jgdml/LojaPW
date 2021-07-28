@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	  xmls:th="http://thymeleaf.org"
+	  xmls:layout="http://www.ultraq.net/thymeleaf/layout">
 <head>
     <title>Spring-Boot Básico</title>
     <meta charset="UTF-8"/>
@@ -85,7 +87,7 @@
 	                        <span>Lista de Funcionários</span>
 	                    </li>
 	                </ul>
-	                <a class="btn btn-primary btn-md" href="/funcionarios/cadastrar" role="button">
+	                <a class="btn btn-primary btn-md" href="/administrativo/funcionarios/cadastrar" role="button">
 	                    <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
 	                    <span>Cadastrar Funcionários</span>
 	                </a>
@@ -173,141 +175,40 @@
 	                    <tr>
 	                        <th>#</th>
 	                        <th>Nome</th>
-	                        <th>Salário</th>
-	                        <th>Departamento</th>
-	                        <th>Cargo</th>
-	                        <th>Endereço</th>
-	                        <th>Data de Entrada</th>
-	                        <th>Data de Saída</th>
+							<th>Cargo</th>
+	                        <th>Salário Bruto</th>
 	                        <th>Ação</th>
 	                    </tr>
 	                    </thead>
 	                    <tbody>
-	                    <tr>
-	                        <td>1</td>
-	                        <td>Jorge da Silva</td>
-	                        <td>R$ 3.500,99</td>
-	                        <td>Recursos Humanos</td>
-	                        <td>Auxiliar de RH</td>
-	                        <td>
-	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
-	                                    data-content="Rua das Oliveiras, 260 Fundos - Centro, Porto Alegre - RS - 97050-015">
-	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                        <td>01/10/2014</td>
-	                        <td></td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/1" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
-	                                    data-toggle="modal" data-target="#myModal">
-	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>2</td>
-	                        <td>Ana Maria Lindoval</td>
-	                        <td>R$ 3.560,70</td>
-	                        <td>Administração</td>
-	                        <td>Auxiliar Administrativo</td>
-	                        <td>
-	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
-	                                    data-content="Av. dos Palmares, 320  - Ribeirão, Canoas - RS - 98050-908">
-	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                        <td>01/08/2014</td>
-	                        <td>02/03/2015</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/2" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_funcionarios/excluir/2" type="button" class="btn btn-danger btn-sm"
-	                                    data-toggle="modal" data-target="#myModal">
-	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>3</td>
-	                        <td>Juan Perez</td>
-	                        <td>R$ 4.060,99</td>
-	                        <td>Tecnologia da Informação</td>
-	                        <td>Desenvolvedor Java Jr.</td>
-	                        <td>
-	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
-	                                    data-content="Rua Senador Cassiano do Nascimento, 135 AP. 106 - Noroeste, Porto Alegre - RS - 90798-099">
-	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                        <td>05/01/2015</td>
-	                        <td></td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/3" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_funcionarios/excluir/3" type="button" class="btn btn-danger btn-sm"
-	                                    data-toggle="modal" data-target="#myModal">
-	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>4</td>
-	                        <td>Marcio Silva</td>
-	                        <td>R$ 2.890,99</td>
-	                        <td>Contabilidade</td>
-	                        <td>Auxiliar Contábil</td>
-	                        <td>
-	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
-	                                    data-content="Av. Maracanã, 309 AP. 108 - Maracanã, Rio de Janeiro - RJ - 91050-980">
-	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                        <td>18/10/2013</td>
-	                        <td>06/09/2015</td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/4" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_funcionarios/excluir/4" type="button" class="btn btn-danger btn-sm"
-	                                    data-toggle="modal" data-target="#myModal">
-	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>5</td>
-	                        <td>Joana Prado</td>
-	                        <td>R$ 3.804,00</td>
-	                        <td>Recursos Humanos</td>
-	                        <td>Coordenador de RH</td>
-	                        <td>
-	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
-	                                    data-content="Rua Gomes Carneiro, 909  - Centro, Porto Alegre - RS - 98080-999">
-	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                        <td>01/05/2015</td>
-	                        <td></td>
-	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/5" role="button">
-	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-	                            </a>
-	                            <button id="btn_funcionarios/excluir/5" type="button" class="btn btn-danger btn-sm"
-	                                    data-toggle="modal" data-target="#myModal">
-	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-	                            </button>
-	                        </td>
-	                    </tr>
+							<tr th:each="funcionario : ${listaFuncionario}">
+								<td th:text="${funcionario.id}"></td>
+								<td th:text="${funcionario.nome}"></td>
+								<td th:text="${funcionario.cargo}"></td>
+								<td th:text="${funcionario.salarioBruto}"></td>
+								<td></td>
+								<td>
+									<button type="button" class="btn btn-secondary btn-sm" data-container="body"
+											data-toggle="popover" data-placement="top"
+											data-content="Rua das Oliveiras, 260 Fundos - Centro, Porto Alegre - RS - 97050-015">
+										<span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
+									</button>
+								</td>
+								<td>01/10/2014</td>
+								<td></td>
+								<td colspan="2">
+									<a class="btn btn-info btn-sm"
+									   th:href="@{/administrativo/funcionarios/editar/{id}{id=${funcionario.id}}}"
+									   role="button">
+										<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+									</a>
+									<button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
+											data-toggle="modal" data-target="#myModal">
+										<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+									</button>
+								</td>
+							</tr>
+
 	                    </tbody>
 	                </table>
 	            </div>

@@ -7,14 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class FuncionarioController {
 
     @Autowired
-    FuncionarioRepo funcionarioRepo;
+    private FuncionarioRepo funcionarioRepo;
 
     @GetMapping("administrativo/funcionarios/cadastrar")
     public ModelAndView cadastrar(Funcionario funcionario){
@@ -41,6 +44,13 @@ public class FuncionarioController {
         funcionarioRepo.saveAndFlush(funcionario);
 
         return cadastrar(new Funcionario());
+    }
+
+    @GetMapping("administrativo/funcionarios/editar/{id}")
+    public ModelAndView editar(@PathVariable("id") Long id){
+        Optional<Funcionario> func = funcionarioRepo.findById(id);
+
+        return cadastrar(func.get());
     }
 
 }
