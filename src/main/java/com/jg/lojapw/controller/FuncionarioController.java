@@ -49,8 +49,17 @@ public class FuncionarioController {
     @GetMapping("administrativo/funcionarios/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id){
         Optional<Funcionario> func = funcionarioRepo.findById(id);
-
+        System.out.println(func.get().getId());
         return cadastrar(func.get());
+    }
+
+    @GetMapping("administrativo/funcionarios/excluir/{id}")
+    public ModelAndView excluir(@PathVariable("id") Long id){
+        Optional<Funcionario> func = funcionarioRepo.findById(id);
+
+        funcionarioRepo.delete(func.get());
+
+        return listar();
     }
 
 }
