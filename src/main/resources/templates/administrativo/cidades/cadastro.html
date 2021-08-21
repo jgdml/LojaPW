@@ -1,6 +1,6 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{administrativo/fragments/layout}">
 <head>
-	<title>Cadastrar Estado</title>
+	<title>Cadastrar Cidade</title>
 </head>
 <body>
 
@@ -11,32 +11,35 @@
 	                    <ul class="navbar-nav">
 	                        <li class="nav-item active">
 	                            <i class="oi oi-caret-right"></i>
-	                            <span>Cadastrar Estado</span>
+	                            <span>Cadastrar Cidade</span>
 	                        </li>
 	                    </ul>
 	                </div>
-	                <a class="btn btn-primary btn-md" href="/administrativo/estados/listar" role="button">
+	                <a class="btn btn-primary btn-md" href="/administrativo/cidades/listar" role="button">
 	                    <span class="oi oi-spreadsheet" title="Cadastro" aria-hidden="true"></span>
-	                    <span>Listar Estados</span>
+	                    <span>Listar Cidades</span>
 	                </a>
 	            </nav>
 	        </div>
 	
 	        <div class="container" id="cadastro">
-	            <form action="/administrativo/estados/salvar" th:object="${estado}" method="POST">
+	            <form action="/administrativo/cidades/salvar" th:object="${cidade}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
-	                        <label for="nome">Nome do Estado</label>
-	                        <input type="text" class="form-control" id="nome" placeholder="Nome do estado"
+	                        <label for="nome">Nome da Cidade</label>
+	                        <input type="text" class="form-control" id="nome" placeholder="Nome do cidade"
 	                               autofocus="autofocus" th:field="*{nome}" value=""/>
 	                        <div class="invalid-feedback">
 	
 	                        </div>
 	                    </div>
 	                    <div class="form-group col-md-6">
-	                        <label for="sigla">Sigla</label>
-	                        <input type="text" class="form-control" id="sigla" placeholder="Sigla do estado"
-	                               data-mask-reverse="true" th:field="*{sigla}" value=""/>
+	                        <label for="estado">Estado</label>
+							<select th:field="*{estado}"
+									class="form-control">
+								<option th:each="est: ${listaEstados}"
+										th:value="${est.id}" th:text="${est.nome}"></option>
+							</select>
 	                        <div class="invalid-feedback">
 	
 	                        </div>
