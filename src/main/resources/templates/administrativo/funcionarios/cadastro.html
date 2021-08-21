@@ -83,7 +83,10 @@
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="cidade">Cidade</label>
-	                        <input type="text" class="form-control" id="cidade" name="cidade" value=""/>
+							<select th:field="*{cidade}" class="form-control">
+								<option th:each="cid: ${listaCidades}"
+									th:value="${cid.id}" th:text="${cid.nome}"></option>
+							</select>
 	                        <div class="invalid-feedback">
 	
 	                        </div>
@@ -122,42 +125,7 @@
 	
 	                        </div>
 	                    </div>
-	                    <div class="form-group col-md-4">
-	                        <label for="uf">UF</label>
-	                        <select id="uf" class="form-control" name="uf">
-	                            <option value="">Selecione...</option>
-	                            <option value="AC">AC</option>
-	                            <option value="AL">AL</option>
-	                            <option value="AM">AM</option>
-	                            <option value="BA">BA</option>
-	                            <option value="CE">CE</option>
-	                            <option value="DF">DF</option>
-	                            <option value="ES">ES</option>
-	                            <option value="GO">GO</option>
-	                            <option value="MA">MA</option>
-	                            <option value="MT">MT</option>
-	                            <option value="MS">MS</option>
-	                            <option value="MG">MG</option>
-	                            <option value="PA">PA</option>
-	                            <option value="PB">PB</option>
-	                            <option value="PR">PR</option>
-	                            <option value="PE">PE</option>
-	                            <option value="PI">PI</option>
-	                            <option value="RJ">RJ</option>
-	                            <option value="RN">RN</option>
-	                            <option value="RS">RS</option>
-	                            <option value="RO">RO</option>
-	                            <option value="RR">RR</option>
-	                            <option value="SC">SC</option>
-	                            <option value="SP">SP</option>
-	                            <option value="SE">SE</option>
-	                            <option value="TO">TO</option>
-	                        </select>
-	                        <div class="invalid-feedback">
-	
-	                        </div>
-	                    </div>
-	                    <div class="form-group col-md-2">
+	                    <div class="form-group col-md-6">
 	                        <label for="cep">Cep</label>
 	                        <input type="text" class="form-control" id="cep" data-mask="00000-000" name="cep"
 	                               value=""/>

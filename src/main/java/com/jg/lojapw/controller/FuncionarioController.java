@@ -1,6 +1,7 @@
 package com.jg.lojapw.controller;
 
 import com.jg.lojapw.entity.Funcionario;
+import com.jg.lojapw.repo.CidadeRepo;
 import com.jg.lojapw.repo.FuncionarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,14 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioRepo funcionarioRepo;
 
+    @Autowired
+    private CidadeRepo cidadeRepo;
+
     @GetMapping("administrativo/funcionarios/cadastrar")
     public ModelAndView cadastrar(Funcionario funcionario){
         ModelAndView mv = new ModelAndView("administrativo/funcionarios/cadastro");
         mv.addObject("funcionario", funcionario);
+        mv.addObject("listaCidades", cidadeRepo.findAll());
 
         return mv;
     }
