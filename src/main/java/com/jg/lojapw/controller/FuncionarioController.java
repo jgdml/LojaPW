@@ -1,7 +1,7 @@
 package com.jg.lojapw.controller;
 
 import com.jg.lojapw.entity.Funcionario;
-import com.jg.lojapw.entity.repo.FuncionarioRepo;
+import com.jg.lojapw.repo.FuncionarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

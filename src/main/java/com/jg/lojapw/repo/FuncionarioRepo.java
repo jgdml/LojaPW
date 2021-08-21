@@ -1,4 +1,4 @@
-package com.jg.lojapw.entity.repo;
+package com.jg.lojapw.repo;
 
 import com.jg.lojapw.entity.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
