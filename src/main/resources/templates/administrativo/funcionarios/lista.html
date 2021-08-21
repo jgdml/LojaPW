@@ -1,6 +1,6 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{administrativo/fragments/layout}">
 <head>
-	<title>Lista de funcionáriosl</title>
+	<title>Lista de funcionários</title>
 </head>
 <body>
 		<section class="layout-content" layout:fragment="corpo">
@@ -120,11 +120,33 @@
 										<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 									</a>
 
+
 									<a class="btn btn-info btn-sm"
-									   th:href="@{/administrativo/funcionarios/excluir/{id}(id=${funcionario.id})}"
+									   data-toggle="modal"
+									   data-target="#modal-warning"
+									   th:attr="data-target='#modal-warning'+${funcionario.id }"
 									   role="button">
 										<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 									</a>
+
+									<div class="modal modal-warning fade in" th:id="modal-warning+${funcionario.id }" >
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">×</span></button>
+													<h5 class="modal-title">Excluir Funcionario</h5>
+												</div>
+												<div class="modal-body">
+													<h3>Deseja excluir este funcionário?</h3>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">NÃO</button>
+													<a type="button" class="btn btn-outline" th:href="@{/administrativo/funcionarios/excluir/{id}(id=${funcionario.id})}"><i class="fa fa-check"></i>&nbsp;SIM</a>
+												</div>
+											</div>
+										</div>
+									</div>
 								</td>
 							</tr>
 
