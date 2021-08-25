@@ -23,7 +23,7 @@ public class Produto implements Serializable {
     private String categoria;
     private String marca;
     private Double valorVenda;
-    private int quantidadeEstoque = 0;
+    private Double quantidadeEstoque = 0.;
 
     public Long getId() {
         return id;
@@ -65,11 +65,11 @@ public class Produto implements Serializable {
         this.marca = marca;
     }
 
-    public int getQuantidadeEstoque() {
+    public Double getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-    public void setQuantidadeEstoque(int quantidadeEstoque) {
+    public void setQuantidadeEstoque(Double quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 }
