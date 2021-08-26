@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "estado")
+@Table(name = "entrada_itens")
 public class EntradaItens implements Serializable {
 
     public EntradaItens() {
