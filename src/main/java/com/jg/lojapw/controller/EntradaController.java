@@ -57,7 +57,17 @@ public class EntradaController {
     @PostMapping("administrativo/entrada/salvar")
     public ModelAndView salvar(String acao, EntradaProduto entrada, EntradaItens entradaItens ){
         if (acao.equals("itens")){
-            this.listaEntradaItens.add(entradaItens);
+            if (entradaItens.getProduto() != null
+                && entradaItens.getQuantidade() != 0.0
+                && entradaItens.getValorProduto() != 0.0
+                && entradaItens.getValorVenda() != 0.0){
+                this.listaEntradaItens.add(entradaItens);
+            }
+            else{
+                System.out.println("Existem campos vazios");
+                return cadastrar(entrada, entradaItens);
+            }
+
         }
         else if (acao.equals("salvar")){
             entradaProdutoRepo.saveAndFlush(entrada);
