@@ -23,7 +23,7 @@
 	        </div>
 	
 	        <div class="container" id="cadastro">
-	            <form action="/administrativo/produtos/salvar" th:object="${produto}" method="POST">
+	            <form action="/administrativo/produtos/salvar" enctype="multipart/form-data" th:object="${produto}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="descricao">Descrição do Produto</label>
@@ -60,6 +60,11 @@
 
 	                        </div>
 	                    </div>
+
+						<div class="form-group col-md-12">
+							<input type="file" name="file" accept=".png, .jpg, .jpeg"/>
+						</div>
+
 	                </div>
 	                <input type="hidden" id="id" th:field="*{id}" value=""/>
 	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>

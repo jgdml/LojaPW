@@ -6,15 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Controller
 public class ProdutoController {
+
+    private static String imgPath = "G:\\Dev\\Code\\Java\\lojapw\\imgs\\";
 
     @Autowired
     private ProdutoRepo produtoRepo;
@@ -36,12 +42,29 @@ public class ProdutoController {
     }
 
     @PostMapping("administrativo/produtos/salvar")
-    public ModelAndView salvar(@Validated Produto produto, BindingResult res){
+    public ModelAndView salvar(@Validated Produto produto, BindingResult res, @RequestParam("file") MultipartFile arq){
         if (res.hasErrors()){
             return cadastrar(produto);
         }
 
         produtoRepo.saveAndFlush(produto);
+
+        try{
+            if (!arq.isEmpty()){
+                byte[] bytes = arq.getBytes();
+                Path path = Paths.get(imgPath+produto.getId()+arq.getOriginalFilename());
+
+                Files.write(path, bytes);
+
+                produto.setNomeImg(produto.getId()+arq.getOriginalFilename());
+                produtoRepo.saveAndFlush(produto);
+            }
+        }
+        catch (IOException err){
+            err.printStackTrace();
+        }
+
+
 
         return cadastrar(new Produto());
     }
@@ -60,6 +83,19 @@ public class ProdutoController {
         produtoRepo.delete(est.get());
 
         return listar();
+    }
+
+    @GetMapping("administrativo/produtos/mostrarImg/{img}")
+    @ResponseBody
+    public byte[] mostrarImg(@PathVariable("img") String img) throws IOException {
+
+        System.out.println(img);
+        File arqImg = new File(imgPath+img);
+
+        if (img != null || img.trim().length() > 0){
+            return Files.readAllBytes(arqImg.toPath());
+        }
+        return null;
     }
 
 }

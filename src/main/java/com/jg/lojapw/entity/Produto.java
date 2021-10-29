@@ -24,6 +24,15 @@ public class Produto implements Serializable {
     private String marca;
     private Double valorVenda;
     private Double quantidadeEstoque = 0.;
+    private String nomeImg;
+
+    public String getNomeImg() {
+        return nomeImg;
+    }
+
+    public void setNomeImg(String nomeImg) {
+        this.nomeImg = nomeImg;
+    }
 
     public Long getId() {
         return id;
