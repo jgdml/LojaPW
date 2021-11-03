@@ -20,7 +20,7 @@ import java.util.Optional;
 @Controller
 public class ProdutoController {
 
-    private static String imgPath = "G:\\Dev\\Code\\Java\\lojapw\\imgs\\";
+    private static String imgPath = System.getProperty("user.dir")+"\\imgs\\";
 
     @Autowired
     private ProdutoRepo produtoRepo;
