@@ -1,5 +1,6 @@
 package com.jg.lojapw.controller;
 
+import br.com.caelum.stella.validation.CPFValidator;
 import com.jg.lojapw.entity.Funcionario;
 import com.jg.lojapw.repo.CidadeRepo;
 import com.jg.lojapw.repo.FuncionarioRepo;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.Optional;
 
@@ -43,7 +45,18 @@ public class FuncionarioController {
 
     @PostMapping("administrativo/funcionarios/salvar")
     public ModelAndView salvar(@Validated Funcionario funcionario, BindingResult res){
+
+        CPFValidator validator = new CPFValidator();
+
         if (res.hasErrors()){
+            return cadastrar(funcionario);
+        }
+
+        try {
+            validator.assertValid(funcionario.getCpf());
+        }
+        catch (Exception e){
+            e.printStackTrace();
             return cadastrar(funcionario);
         }
 

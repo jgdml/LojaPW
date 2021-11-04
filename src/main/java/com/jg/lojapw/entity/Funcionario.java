@@ -41,9 +41,18 @@ public class Funcionario implements Serializable {
     private String bairro;
     private String uf;
     private String cep;
+    private String cpf;
 
     private String email;
     private String senha;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     public String getEmail() {
         return email;
