@@ -112,7 +112,7 @@
 								<td th:text="${funcionario.nome}"></td>
 								<td th:text="${funcionario.cargo}"></td>
 								<td th:text="${funcionario.salarioBruto}"></td>
-								<td th:text="${funcionario.cidade.nome +'-'+ funcionario.cidade.estado.sigla}"></td>
+								<td th:if="${funcionario.cidade != null}" th:text="${funcionario.cidade.nome +'-'+ funcionario.cidade.estado.sigla}"></td>
 								<td></td>
 								<td></td>
 								<td colspan="2">
