@@ -1,8 +1,9 @@
 package com.jg.lojapw.entity;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -24,14 +25,18 @@ public class Produto implements Serializable {
     private String marca;
     private Double valorVenda;
     private Double quantidadeEstoque = 0.;
-    private String nomeImg;
 
-    public String getNomeImg() {
-        return nomeImg;
+
+    @Column(name = "nome_imgs")
+    @ElementCollection
+    private List<String> nomeImgs = new ArrayList<String>();
+
+    public List<String> getNomeImgs() {
+        return nomeImgs;
     }
 
-    public void setNomeImg(String nomeImg) {
-        this.nomeImg = nomeImg;
+    public void setNomeImgs(List<String> nomeImgs) {
+        this.nomeImgs = nomeImgs;
     }
 
     public Long getId() {

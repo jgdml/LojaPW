@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -42,7 +44,7 @@ public class ProdutoController {
     }
 
     @PostMapping("administrativo/produtos/salvar")
-    public ModelAndView salvar(@Validated Produto produto, BindingResult res, @RequestParam("file") MultipartFile arq){
+    public ModelAndView salvar(@Validated Produto produto, BindingResult res, @RequestParam("files") List<MultipartFile> arqs){
         if (res.hasErrors()){
             return cadastrar(produto);
         }
@@ -50,21 +52,25 @@ public class ProdutoController {
         produtoRepo.saveAndFlush(produto);
 
         try{
-            if (!arq.isEmpty()){
-                byte[] bytes = arq.getBytes();
-                Path path = Paths.get(imgPath+produto.getId()+arq.getOriginalFilename());
+            List<String> nomeImgs = new ArrayList<String>();
+            for (MultipartFile arq : arqs){
+                if (!arq.isEmpty()){
+                    String imgName = produto.getId()+"-"+nomeImgs.size()+ arq.getOriginalFilename();
 
-                Files.write(path, bytes);
+                    byte[] bytes = arq.getBytes();
+                    Path path = Paths.get(imgPath+imgName);
 
-                produto.setNomeImg(produto.getId()+arq.getOriginalFilename());
-                produtoRepo.saveAndFlush(produto);
+                    Files.write(path, bytes);
+
+                    nomeImgs.add(imgName);
+                }
             }
+            produto.setNomeImgs(nomeImgs);
+            produtoRepo.saveAndFlush(produto);
         }
         catch (IOException err){
             err.printStackTrace();
         }
-
-
 
         return cadastrar(new Produto());
     }
@@ -89,7 +95,6 @@ public class ProdutoController {
     @ResponseBody
     public byte[] mostrarImg(@PathVariable("img") String img) throws IOException {
 
-        System.out.println(img);
         File arqImg = new File(imgPath+img);
 
         if (img != null || img.trim().length() > 0){
