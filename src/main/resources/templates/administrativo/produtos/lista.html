@@ -17,8 +17,17 @@
 	                    <span>Cadastrar Produtos</span>
 	                </a>
 	            </div>
+
 	        </nav>
+				<form class="input-group mb-3 w-50" action="/administrativo/produtos/listar" method="get">
+					<button type="submit" class="btn btn-outline-secondary">Buscar</button>
+
+					<input class="form-control" type="text" name="busca" th:value="${busca}" placeholder="Busca por descrição, marca ou categoria" size="50" >
+				</form>
+
 	            <div class="table-responsive">
+
+
 	                <table class="table table-striped table-hover table-sm">
 	                    <thead>
 	                    <tr>

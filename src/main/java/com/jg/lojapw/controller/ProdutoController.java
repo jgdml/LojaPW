@@ -44,9 +44,17 @@ public class ProdutoController {
     }
 
     @GetMapping("administrativo/produtos/listar")
-    public ModelAndView listar(){
+    public ModelAndView listar(String busca){
         ModelAndView mv = new ModelAndView("administrativo/produtos/lista");
-        mv.addObject("listaProduto", produtoRepo.findAll());
+
+        if (busca != null && !busca.isEmpty()){
+
+            mv.addObject("listaProduto", produtoRepo.findAllByDescricaoContainsOrMarcaNomeContainsOrCategoriaNomeContains(busca, busca, busca));
+            mv.addObject("busca", busca);
+        }
+        else{
+            mv.addObject("listaProduto", produtoRepo.findAll());
+        }
 
         return mv;
     }
@@ -92,7 +100,7 @@ public class ProdutoController {
 
         produtoRepo.delete(est.get());
 
-        return listar();
+        return listar("");
     }
 
     @GetMapping("administrativo/produtos/mostrarImg/{img}")
