@@ -34,27 +34,33 @@
 	                        </div>
 	                    </div>
 	                    <div class="form-group col-md-6">
-	                        <label for="categoria">Categoria</label>
-	                        <input type="text" class="form-control" id="categoria" placeholder="Categoria do produto"
-	                               data-mask-reverse="true" th:field="*{categoria}" value=""/>
-	                        <div class="invalid-feedback">
-	
-	                        </div>
+							<label for="categoria">Categoria</label>
+							<select th:field="*{categoria}"
+									class="form-control">
+								<option th:each="cat: ${listaCategoria}"
+										th:value="${cat.id}" th:text="${cat.nome}"></option>
+							</select>
+							<div class="invalid-feedback">
+
+							</div>
 	                    </div>
 	                </div>
 
 					<div class="form-row">
 	                    <div class="form-group col-md-6">
-	                        <label for="marca">Marca do Produto</label>
-	                        <input type="text" class="form-control" id="marca" placeholder="Marca do produto"
-	                               autofocus="autofocus" th:field="*{marca}" value=""/>
-	                        <div class="invalid-feedback">
+							<label for="marca">Marca</label>
+							<select th:field="*{marca}"
+									class="form-control">
+								<option th:each="mar: ${listaMarca}"
+										th:value="${mar.id}" th:text="${mar.nome}"></option>
+							</select>
+							<div class="invalid-feedback">
 
-	                        </div>
+							</div>
 	                    </div>
 	                    <div class="form-group col-md-6">
 	                        <label for="valorVenda">Valor de venda</label>
-	                        <input type="text" class="form-control" id="valorVenda" placeholder="Categoria do produto"
+	                        <input type="text" class="form-control" id="valorVenda" placeholder="Valor de venda do produto"
 	                               data-mask-reverse="true" th:field="*{valorVenda}" value=""/>
 	                        <div class="invalid-feedback">
 

@@ -20,11 +20,32 @@ public class Produto implements Serializable {
     private Long id;
 
     private String descricao;
-    private String categoria;
-    private String marca;
     private Double valorVenda;
     private Double quantidadeEstoque = 0.;
     private String nomeImg;
+
+    @ManyToOne
+    private Marca marca;
+
+    @ManyToOne
+    private Categoria categoria;
+
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public String getNomeImg() {
         return nomeImg;
@@ -58,21 +79,7 @@ public class Produto implements Serializable {
         this.valorVenda = valorVenda;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
 
     public Double getQuantidadeEstoque() {
         return quantidadeEstoque;
