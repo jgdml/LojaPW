@@ -1,0 +1,36 @@
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{administrativo/fragments/layout}">
+<head>
+	<title>Teste de Produto</title>
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<div class="container">
+			<form class="m-2" th:action="@{/administrativo/bench/test}" method="post">
+				<div class="form-row">
+
+					<div class="form-group col-md-6">
+						<label for="qntd">Quantidade de produtos</label>
+						<input id="qntd" type="number" class="form-control" name="qntd" th:value="${qntd}"
+							   placeholder="ex. 10000" required="required">
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Testar</button>
+			</form>
+
+			<form class="m-2" th:action="@{/administrativo/bench/deleteTest}" method="post">
+				<button type="submit" class="btn btn-primary">Deletar produtos de teste</button>
+			</form>
+
+			<div class="alert-primary p-md-2" th:if="${time} != null">
+				<strong th:text="${qntd}"></strong>
+				<span th:text="' itens alterados em '"></span>
+				<strong th:text="${time}+' segundos'"></strong>
+			</div>
+		</div>
+
+
+	</section>
+
+</body>
+</html>		
