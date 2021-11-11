@@ -36,8 +36,13 @@
 								<td th:text="${produto.descricao}"></td>
 								<td th:text="${produto.quantidadeEstoque}"></td>
 								<td th:text="${produto.valorVenda}"></td>
+								<td>
+									<th:block th:if="${produto.nomeImgs} != null" th:each="imgName : ${produto.nomeImgs}">
+										<img th:src="@{/administrativo/produtos/mostrarImg/{img}(img=${imgName})}" width="125">
+									</th:block>
+								</td>
 
-								<td> <img th:src="@{/administrativo/produtos/mostrarImg/{img}(img=${produto.nomeImg})}" width="125"></td>
+
 
 								<td colspan="2">
 									<a class="btn btn-info btn-sm"
