@@ -6,6 +6,7 @@ import com.jg.lojapw.repo.MarcaRepo;
 import com.jg.lojapw.repo.ProdutoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,9 +56,20 @@ public class ProdutoController {
             mv.addObject("listaProduto", produtoRepo.findAllByDescricaoContainsOrMarcaNomeContainsOrCategoriaNomeContains(busca, busca, busca));
             mv.addObject("busca", busca);
         }
-        else{
-            mv.addObject("listaProduto", produtoRepo.findAll());
-        }
+
+        List<Produto> produtos;
+        String time;
+        StopWatch sw = new StopWatch();
+
+        sw.start();
+        produtos = produtoRepo.findAll();
+        mv.addObject("listaProduto", produtos);
+        sw.stop();
+
+
+        time = String.format("%.2f", sw.getTotalTimeSeconds());
+        mv.addObject("time", time);
+        mv.addObject("qntde", produtos.size());
 
         return mv;
     }
