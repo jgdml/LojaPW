@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,13 +30,15 @@ public class BenchmarkController {
 
         ModelAndView mv = new ModelAndView("administrativo/benchmark");
         StopWatch sw = new StopWatch();
+        List<Produto> produtos = new ArrayList<>();
 
         sw.start();
         for (Integer i = 0; i < qntd; i++){
             Produto p = new Produto();
             p.setDescricao("Produto.De.Teste");
-            produtoRepo.saveAndFlush(p);
+            produtos.add(p);
         }
+        produtoRepo.saveAllAndFlush(produtos);
         sw.stop();
 
         mv.addObject("time", String.format("%.2f", sw.getTotalTimeSeconds()));

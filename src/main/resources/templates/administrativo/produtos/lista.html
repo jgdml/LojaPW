@@ -12,7 +12,7 @@
 	                        <span>Lista de Produtos</span>
 
 							<br/>
-							<span style="color: gray" th:text="${time} + ' segundos para buscar ' + ${qntde} +' produtos'"></span>
+							<span style="color: gray" th:text="${time} + ' segundos para buscar ' + ${#numbers.formatInteger(qntde,3,'POINT')} +' produtos'"></span>
 	                    </li>
 	                </ul>
 	                <a class="btn btn-primary btn-md" href="/administrativo/produtos/cadastrar" role="button">

@@ -23,7 +23,7 @@
 			</form>
 
 			<div class="alert-primary p-md-2" th:if="${time} != null">
-				<strong th:text="${qntd}"></strong>
+				<strong th:text="${#numbers.formatInteger(qntd,3,'POINT')}"></strong>
 				<span th:text="' itens alterados em '"></span>
 				<strong th:text="${time}+' segundos'"></strong>
 			</div>
