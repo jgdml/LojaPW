@@ -1,9 +1,13 @@
 package com.jg.lojapw.controller;
 
 import br.com.caelum.stella.validation.CPFValidator;
+import com.jg.lojapw.EmailSender;
+import com.jg.lojapw.RandPass;
 import com.jg.lojapw.entity.Funcionario;
+import com.jg.lojapw.entity.SenhaToken;
 import com.jg.lojapw.repo.CidadeRepo;
 import com.jg.lojapw.repo.FuncionarioRepo;
+import com.jg.lojapw.repo.SenhaTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,7 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +30,12 @@ public class FuncionarioController {
 
     @Autowired
     private CidadeRepo cidadeRepo;
+
+    @Autowired
+    private EmailSender emailSender;
+
+    @Autowired
+    private SenhaTokenRepo senhaTokenRepo;
 
     @GetMapping("administrativo/funcionarios/cadastrar")
     public ModelAndView cadastrar(Funcionario funcionario){
@@ -60,8 +71,15 @@ public class FuncionarioController {
             return cadastrar(funcionario);
         }
 
-        funcionario.setSenha(new BCryptPasswordEncoder().encode(funcionario.getSenha()));
+        funcionario.setSenha(new BCryptPasswordEncoder().encode(RandPass.getRandPass()));
         funcionarioRepo.saveAndFlush(funcionario);
+
+        SenhaToken senhaToken = new SenhaToken();
+        senhaToken.setDuracao(1440);
+        senhaToken.setFuncionario(funcionario);
+        senhaTokenRepo.saveAndFlush(senhaToken);
+
+        emailSender.sendSetPassEmail(funcionario.getEmail(), URLEncoder.encode(senhaToken.getToken(), StandardCharsets.UTF_8));
 
         return cadastrar(new Funcionario());
     }

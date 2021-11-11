@@ -42,22 +42,31 @@
     </style>
 </head>
 <body>
+
+
 <div class="login-form">
-    <form th:action="@{/login}" method="post">
-        <h2 class="text-center">Login do Painel Administrativo</h2>
+
+    <h2 th:if="${crash} != null" th:text="${crash}"></h2>
+
+
+    <form th:if="${crash} == null" th:action="@{/login/setPass?token=}+${token}" method="post">
+        <h2 class="text-center">Redefinir senha</h2>
+
         <div class="form-group">
-            <input type="text" class="form-control" name="username"
-                   placeholder="E-mail" required="required">
-        </div>
-        <div class="form-group">
-            <input type="password" name="password" class="form-control"
-                   placeholder="Senha" required="required">
+            <input type="password" class="form-control" name="senha" th:value="${senha}"
+                   placeholder="Insira a nova senha" required="required">
+
+            <input type="password" class="form-control" name="senha2" th:value="${senha2}"
+                   placeholder="Repita a senha" required="required">
         </div>
 
-        <a href="/login/sendEmail" method="get">Esqueci a senha</a>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <button type="submit" class="btn btn-primary btn-block">Alterar Senha</button>
         </div>
+
+        <h4 th:if="${err} != null" class="alert-danger" th:text="${err}"></h4>
+
+        <h4 th:if="${msg} != null" class="alert-success" th:text="${msg}"></h4>
 
     </form>
 </div>
