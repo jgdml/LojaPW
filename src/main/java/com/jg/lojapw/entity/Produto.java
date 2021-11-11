@@ -21,23 +21,19 @@ public class Produto implements Serializable {
     private Long id;
 
     private String descricao;
-    private String categoria;
-    private String marca;
     private Double valorVenda;
     private Double quantidadeEstoque = 0.;
 
 
+    @ManyToOne
+    private Marca marca;
+
+    @ManyToOne
+    private Categoria categoria;
+
     @Column(name = "nome_imgs")
     @ElementCollection
     private List<String> nomeImgs = new ArrayList<String>();
-
-    public List<String> getNomeImgs() {
-        return nomeImgs;
-    }
-
-    public void setNomeImgs(List<String> nomeImgs) {
-        this.nomeImgs = nomeImgs;
-    }
 
     public Long getId() {
         return id;
@@ -63,27 +59,35 @@ public class Produto implements Serializable {
         this.valorVenda = valorVenda;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public Double getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
     public void setQuantidadeEstoque(Double quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<String> getNomeImgs() {
+        return nomeImgs;
+    }
+
+    public void setNomeImgs(List<String> nomeImgs) {
+        this.nomeImgs = nomeImgs;
     }
 }

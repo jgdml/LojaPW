@@ -1,6 +1,8 @@
 package com.jg.lojapw.controller;
 
 import com.jg.lojapw.entity.Produto;
+import com.jg.lojapw.repo.CategoriaRepo;
+import com.jg.lojapw.repo.MarcaRepo;
 import com.jg.lojapw.repo.ProdutoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,18 +29,34 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepo produtoRepo;
 
+    @Autowired
+    private MarcaRepo marcaRepo;
+
+    @Autowired
+    private CategoriaRepo categoriaRepo;
+
     @GetMapping("administrativo/produtos/cadastrar")
     public ModelAndView cadastrar(Produto produto){
         ModelAndView mv = new ModelAndView("administrativo/produtos/cadastro");
         mv.addObject("produto", produto);
+        mv.addObject("listaCategoria", categoriaRepo.findAll());
+        mv.addObject("listaMarca", marcaRepo.findAll());
 
         return mv;
     }
 
     @GetMapping("administrativo/produtos/listar")
-    public ModelAndView listar(){
+    public ModelAndView listar(String busca){
         ModelAndView mv = new ModelAndView("administrativo/produtos/lista");
-        mv.addObject("listaProduto", produtoRepo.findAll());
+
+        if (busca != null && !busca.isEmpty()){
+
+            mv.addObject("listaProduto", produtoRepo.findAllByDescricaoContainsOrMarcaNomeContainsOrCategoriaNomeContains(busca, busca, busca));
+            mv.addObject("busca", busca);
+        }
+        else{
+            mv.addObject("listaProduto", produtoRepo.findAll());
+        }
 
         return mv;
     }
@@ -88,7 +106,7 @@ public class ProdutoController {
 
         produtoRepo.delete(est.get());
 
-        return listar();
+        return listar("");
     }
 
     @GetMapping("administrativo/produtos/mostrarImg/{img}")
