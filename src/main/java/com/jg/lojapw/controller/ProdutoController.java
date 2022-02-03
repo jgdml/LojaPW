@@ -55,6 +55,7 @@ public class ProdutoController {
 
             mv.addObject("listaProduto", produtoRepo.findAllByDescricaoContainsOrMarcaNomeContainsOrCategoriaNomeContains(busca, busca, busca));
             mv.addObject("busca", busca);
+            return mv;
         }
 
         List<Produto> produtos;

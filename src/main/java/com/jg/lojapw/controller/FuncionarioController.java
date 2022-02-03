@@ -38,10 +38,13 @@ public class FuncionarioController {
     private SenhaTokenRepo senhaTokenRepo;
 
     @GetMapping("administrativo/funcionarios/cadastrar")
-    public ModelAndView cadastrar(Funcionario funcionario){
+    public ModelAndView cadastrar(Funcionario funcionario, boolean hasCpfErr){
         ModelAndView mv = new ModelAndView("administrativo/funcionarios/cadastro");
         mv.addObject("funcionario", funcionario);
         mv.addObject("listaCidades", cidadeRepo.findAll());
+        if (hasCpfErr){
+            mv.addObject("cpfErr", "O CPF digitado é inválido");
+        }
 
         return mv;
     }
@@ -60,7 +63,7 @@ public class FuncionarioController {
         CPFValidator validator = new CPFValidator();
 
         if (res.hasErrors()){
-            return cadastrar(funcionario);
+            return cadastrar(funcionario, false);
         }
 
         try {
@@ -68,7 +71,7 @@ public class FuncionarioController {
         }
         catch (Exception e){
             e.printStackTrace();
-            return cadastrar(funcionario);
+            return cadastrar(funcionario, true);
         }
 
         funcionario.setSenha(new BCryptPasswordEncoder().encode(RandPass.getRandPass()));
@@ -81,14 +84,14 @@ public class FuncionarioController {
 
         emailSender.sendSetPassEmail(funcionario.getEmail(), URLEncoder.encode(senhaToken.getToken(), StandardCharsets.UTF_8));
 
-        return cadastrar(new Funcionario());
+        return cadastrar(new Funcionario(), false);
     }
 
     @GetMapping("administrativo/funcionarios/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id){
         Optional<Funcionario> func = funcionarioRepo.findById(id);
         System.out.println(func.get().getId());
-        return cadastrar(func.get());
+        return cadastrar(func.get(), false);
     }
 
     @GetMapping("administrativo/funcionarios/excluir/{id}")
