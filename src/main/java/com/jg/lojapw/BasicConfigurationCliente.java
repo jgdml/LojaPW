@@ -16,33 +16,35 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
-public class BasicConfiguration extends WebSecurityConfigurerAdapter {
+@Order(1)
+public class BasicConfigurationCliente extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(
-                "select email as username, senha as password, 1 as enable from funcionario where email=?"
+                "select email as username, senha as password, 1 as enable from cliente where email=?"
         ).authoritiesByUsernameQuery(
-                "select funcionario.email as username, papel.nome as authority from permissoes inner join funcionario on funcionario.id=permissoes.funcionario_id inner join papel on permissoes.papel_id=papel.id where funcionario.email=?"
+                "select email as username, 'cliente' as authority from cliente where email=?"
         ).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/login").permitAll()
-                .antMatchers("/administrativo/cadastrar/**").hasAnyAuthority("gerente")
-                .antMatchers("/administrativo/**").authenticated()
-                .and().formLogin().loginPage("/login").failureUrl("/login")
-                .loginProcessingUrl("/admin").defaultSuccessUrl("/administrativo").usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/administrativo/logout"))
-                .logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
-                .and().exceptionHandling().accessDeniedPage("/negado")
-                .and().csrf().disable();
+        http.antMatcher("/finalizar/**").authorizeRequests().anyRequest().hasAnyAuthority("cliente")
+                .and().csrf().disable().formLogin().loginPage("/cliente/cadastrar").permitAll()
+                .failureUrl("/cliente/cadastrar").loginProcessingUrl("/finalizar/login")
+                .defaultSuccessUrl("/finalizar")
+                .usernameParameter("username").passwordParameter("password")
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/finalizar/logout"))
+                .logoutSuccessUrl("/").permitAll().and().exceptionHandling().accessDeniedPage("/negadoCliente");
     }
 
 

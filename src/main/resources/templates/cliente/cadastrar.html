@@ -9,8 +9,6 @@
 
 <div class="container" layout:fragment="corpo">
 
-
-
     <div class="row">
 
         <div class="col-6">
@@ -83,21 +81,21 @@
         <div class="col-6">
 
 
-            <form action="/cliente/salvar" th:object="${cliente}" method="POST">
+            <form action="/finalizar/login" method="POST">
                 <div class="form-row">
 
                     <div class="form-group col-md-12">
                         <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Insira o email"
-                               autofocus="autofocus" th:field="*{email}" value=""/>
+                        <input type="text" class="form-control" placeholder="Insira o email" name="username"
+                               autofocus="autofocus" value=""/>
                         <div class="invalid-feedback">
 
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label >Senha</label>
-                        <input type="password" class="form-control" placeholder="Insira a senha"
-                               autofocus="autofocus" th:field="*{senha}" value=""/>
+                        <input type="password" class="form-control" placeholder="Insira a senha" name="password"
+                               autofocus="autofocus" value=""/>
                         <div class="invalid-feedback">
 
                         </div>
@@ -113,4 +111,6 @@
     </div>
 </div>
 </body>
+
+
 </html>

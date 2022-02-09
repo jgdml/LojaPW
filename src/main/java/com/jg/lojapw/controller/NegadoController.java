@@ -16,4 +16,11 @@ public class NegadoController {
 
         return mv;
     }
+
+    @GetMapping("/negadoCliente")
+    public ModelAndView acessoNegadoCliente(){
+        ModelAndView mv = new ModelAndView("/negadoCliente");
+
+        return mv;
+    }
 }

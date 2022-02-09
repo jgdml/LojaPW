@@ -1,10 +1,15 @@
 package com.jg.lojapw.controller;
 
+import com.jg.lojapw.entity.Cliente;
 import com.jg.lojapw.entity.Compra;
 import com.jg.lojapw.entity.ItensCompra;
 import com.jg.lojapw.entity.Produto;
+import com.jg.lojapw.repo.ClienteRepo;
 import com.jg.lojapw.repo.ProdutoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +27,13 @@ public class CarrinhoController {
 
     private Compra compra = new Compra();
 
+    private Cliente cliente;
+
     @Autowired
     private ProdutoRepo produtoRepo;
+
+    @Autowired
+    private ClienteRepo clienteRepo;
 
 
     private void calcularTotal(){
@@ -46,14 +56,27 @@ public class CarrinhoController {
     }
 
 
+    private void buscarUsuario(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)){
+            String email = authentication.getName();
+
+            cliente = clienteRepo.findClienteByEmail(email).get(0);
+        }
+    }
+
+
     @GetMapping("/finalizar")
     public ModelAndView finalizar()  {
         ModelAndView mv = new ModelAndView("cliente/finalizar");
 
         calcularTotal();
+        buscarUsuario();
 
         mv.addObject("compra", compra);
         mv.addObject("listaItensCompra", itensCompraList);
+        mv.addObject("cliente", cliente);
         return mv;
     }
 
