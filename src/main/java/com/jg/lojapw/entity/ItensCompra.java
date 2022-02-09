@@ -29,7 +29,7 @@ public class ItensCompra implements Serializable {
 
     private Double valorProduto;
 
-    private Double valorTotal;
+    private Double valorTotal = .0;
 
     public Long getId() {
         return id;

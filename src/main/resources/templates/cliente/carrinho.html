@@ -18,7 +18,8 @@
                             <th scope="col">Produto</th>
                             <th scope="col">Disponibilidade</th>
                             <th scope="col" class="text-center">Quantidade</th>
-                            <th scope="col" class="text-right">Preço</th>
+                            <th scope="col" class="text-right">Preço Unitário</th>
+                            <th scope="col" class="text-right">Preço Total</th>
                             <th> </th>
                         </tr>
                         </thead>
@@ -27,13 +28,26 @@
                             <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
                             <td th:text="${itemCompra.produto.descricao}"></td>
                             <td>Em Estoque</td>
-                            <td >
+                            <td style="display: flex; justify-content: center;">
                                 <span th:text="${itemCompra.quantidade}"></span>
-                                <button class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i> </button>
-                                <button class="btn btn-sm btn-secondary"><i class="fa fa-minus"></i> </button>
+                                &nbsp;
+                                <a class="btn btn-sm btn-secondary" th:href="@{/alterarQuantidadeCarrinho/{id}/{acao}(id=${itemCompra.produto.id}, acao=${1})}">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+
+                                <a class="btn btn-sm btn-secondary" th:href="@{/alterarQuantidadeCarrinho/{id}/{acao}(id=${itemCompra.produto.id}, acao=${0})}">
+                                    <i class="fa fa-minus"></i>
+                                </a>
                             </td>
+                            <td class="text-right" th:text="${itemCompra.valorProduto}">€</td>
                             <td class="text-right" th:text="${itemCompra.valorTotal}">€</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+
+                            <td class="text-right">
+                                <a class="btn btn-sm btn-danger" th:href="@{/removerProduto/{id}/(id=${itemCompra.produto.id})}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+
+                            </td>
                         </tr>
 
                         <tr>
@@ -41,24 +55,27 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td>Sub-Total</td>
-                            <td class="text-right">255,90 €</td>
+                            <td class="text-right">R$ &nbsp<span th:text="${compra.total}"></span></td>
                         </tr>
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>Frete</td>
-                            <td class="text-right">6,90 €</td>
+                            <td class="text-right">R$ 0.0</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
+                            <td class="text-right"><strong>R$ &nbsp<span th:text="${compra.total}"></span></strong></td>
                         </tr>
                         </tbody>
                     </table>

@@ -27,7 +27,7 @@ public class Compra implements Serializable {
     private Date dtCompra = new Date();
 
     private String pagamento;
-    private Double total;
+    private Double total = .0;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
