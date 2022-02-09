@@ -45,6 +45,19 @@ public class CarrinhoController {
         return mv;
     }
 
+
+    @GetMapping("/finalizar")
+    public ModelAndView finalizar()  {
+        ModelAndView mv = new ModelAndView("cliente/finalizar");
+
+        calcularTotal();
+
+        mv.addObject("compra", compra);
+        mv.addObject("listaItensCompra", itensCompraList);
+        return mv;
+    }
+
+
     @GetMapping("/removerProduto/{id}")
     public String removerProduto(@PathVariable Long id) {
 

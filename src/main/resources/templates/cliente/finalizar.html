@@ -2,7 +2,7 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{cliente/fragments/layout}">
 <html lang="en">
     <head>
-        <title>Seu Carrinho</title>
+        <title>Finalizar Compra</title>
     </head>
 
     <body>
@@ -10,6 +10,20 @@
         <div class="container" layout:fragment="corpo">
 
             <div class="col-12">
+                Info do usuario
+            </div>
+
+            <div class="col-4">
+                <select class="form-control">
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="boleto">Boleto</option>
+                    <option value="transferencia">Transferência</option>
+
+                </select>
+            </div>
+
+            <div class="col-12">
+
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -31,23 +45,11 @@
                             <td style="display: flex; justify-content: center;">
                                 <span th:text="${itemCompra.quantidade}"></span>
                                 &nbsp;
-                                <a class="btn btn-sm btn-secondary" th:href="@{/alterarQuantidadeCarrinho/{id}/{acao}(id=${itemCompra.produto.id}, acao=${1})}">
-                                    <i class="fa fa-plus"></i>
-                                </a>
-
-                                <a class="btn btn-sm btn-secondary" th:href="@{/alterarQuantidadeCarrinho/{id}/{acao}(id=${itemCompra.produto.id}, acao=${0})}">
-                                    <i class="fa fa-minus"></i>
-                                </a>
                             </td>
                             <td class="text-right" th:text="${itemCompra.valorProduto}">€</td>
                             <td class="text-right" th:text="${itemCompra.valorTotal}">€</td>
 
-                            <td class="text-right">
-                                <a class="btn btn-sm btn-danger" th:href="@{/removerProduto/{id}/(id=${itemCompra.produto.id})}">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-
-                            </td>
+                            <td class="text-right"></td>
                         </tr>
 
                         <tr>
@@ -83,11 +85,8 @@
             </div>
             <div class="col mb-2">
                 <div class="row">
-                    <div class="col-sm-12  col-md-6">
-                        <button class="btn btn-block btn-light">Continuar Comprando</button>
-                    </div>
-                    <div class="col-sm-12 col-md-6 text-right">
-                        <a class="btn btn-lg btn-block btn-success text-uppercase" href="/finalizar">Pagar</a>
+                    <div class="col-sm-12 col-md-12 text-right">
+                        <button class="btn btn-lg btn-block btn-success text-uppercase">Finalizar Pedido</button>
                     </div>
                 </div>
             </div>
