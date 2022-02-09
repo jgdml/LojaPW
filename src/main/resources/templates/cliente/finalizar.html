@@ -1,96 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{cliente/fragments/layout}">
 <html lang="en">
-    <head>
-        <title>Finalizar Compra</title>
-    </head>
+<head>
+    <title>Finalizar Compra</title>
+</head>
 
-    <body>
+<body>
 
-        <div class="container" layout:fragment="corpo">
+<div class="container" layout:fragment="corpo">
 
-            <div class="col-12">
-                <h3><span th:text="${cliente.nome}"></span></h3>
-                <h3><span th:text="${cliente.email}"></span></h3>
+    <div class="col-12">
+        <h3><span th:text="${cliente.nome}"></span></h3>
+        <h3><span th:text="${cliente.email}"></span></h3>
+    </div>
+
+    <form action="/finalizar/confirmar" method="POST">
+
+
+        <div class="col-4">
+            <select class="form-control" name="pagamento">
+                <option value="cartao">Cartão de Crédito</option>
+                <option value="boleto">Boleto</option>
+                <option value="transferencia">Transferência</option>
+
+            </select>
+        </div>
+
+        <div class="col-12">
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Disponibilidade</th>
+                        <th scope="col" class="text-center">Quantidade</th>
+                        <th scope="col" class="text-right">Preço Unitário</th>
+                        <th scope="col" class="text-right">Preço Total</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="itemCompra: ${listaItensCompra}">
+                        <td><img src="https://dummyimage.com/50x50/55595c/fff"/></td>
+                        <td th:text="${itemCompra.produto.descricao}"></td>
+                        <td>Em Estoque</td>
+                        <td style="display: flex; justify-content: center;">
+                            <span th:text="${itemCompra.quantidade}"></span>
+                            &nbsp;
+                        </td>
+                        <td class="text-right" th:text="${itemCompra.valorProduto}">€</td>
+                        <td class="text-right" th:text="${itemCompra.valorTotal}">€</td>
+
+                        <td class="text-right"></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Sub-Total</td>
+                        <td class="text-right">R$ &nbsp<span th:text="${compra.total}"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Frete</td>
+                        <td class="text-right">R$ 0.0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td class="text-right"><strong>R$ &nbsp<span th:text="${compra.total}"></span></strong></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="col-4">
-                <select class="form-control">
-                    <option value="cartao">Cartão de Crédito</option>
-                    <option value="boleto">Boleto</option>
-                    <option value="transferencia">Transferência</option>
-
-                </select>
-            </div>
-
-            <div class="col-12">
-
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Produto</th>
-                            <th scope="col">Disponibilidade</th>
-                            <th scope="col" class="text-center">Quantidade</th>
-                            <th scope="col" class="text-right">Preço Unitário</th>
-                            <th scope="col" class="text-right">Preço Total</th>
-                            <th> </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="itemCompra: ${listaItensCompra}">
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td th:text="${itemCompra.produto.descricao}"></td>
-                            <td>Em Estoque</td>
-                            <td style="display: flex; justify-content: center;">
-                                <span th:text="${itemCompra.quantidade}"></span>
-                                &nbsp;
-                            </td>
-                            <td class="text-right" th:text="${itemCompra.valorProduto}">€</td>
-                            <td class="text-right" th:text="${itemCompra.valorTotal}">€</td>
-
-                            <td class="text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Sub-Total</td>
-                            <td class="text-right">R$ &nbsp<span th:text="${compra.total}"></span></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Frete</td>
-                            <td class="text-right">R$ 0.0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>R$ &nbsp<span th:text="${compra.total}"></span></strong></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col mb-2">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 text-right">
-                        <button class="btn btn-lg btn-block btn-success text-uppercase">Finalizar Pedido</button>
-                    </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">Finalizar Pedido</button>
                 </div>
             </div>
         </div>
-    </body>
+    </form>
+</div>
+</body>
 </html>

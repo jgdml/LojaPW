@@ -16,9 +16,6 @@ public class IndexController {
 
     @GetMapping("/")
     public ModelAndView home(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        System.out.println(authentication.getName());
         ModelAndView mv = new ModelAndView("/index");
 
         mv.addObject("listaProdutos", produtoRepo.findAll());

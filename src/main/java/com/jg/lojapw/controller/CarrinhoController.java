@@ -5,6 +5,8 @@ import com.jg.lojapw.entity.Compra;
 import com.jg.lojapw.entity.ItensCompra;
 import com.jg.lojapw.entity.Produto;
 import com.jg.lojapw.repo.ClienteRepo;
+import com.jg.lojapw.repo.CompraRepo;
+import com.jg.lojapw.repo.ItensCompraRepo;
 import com.jg.lojapw.repo.ProdutoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -35,6 +38,11 @@ public class CarrinhoController {
     @Autowired
     private ClienteRepo clienteRepo;
 
+    @Autowired
+    private CompraRepo compraRepo;
+
+    @Autowired
+    private ItensCompraRepo itensCompraRepo;
 
     private void calcularTotal(){
         compra.setTotal(.0);
@@ -53,6 +61,29 @@ public class CarrinhoController {
         mv.addObject("compra", compra);
         mv.addObject("listaItensCompra", itensCompraList);
         return mv;
+    }
+
+
+    @PostMapping("/finalizar/confirmar")
+    public ModelAndView finalizarPedido(String pagamento){
+        ModelAndView mv = new ModelAndView("cliente/compraFinalizada");
+
+        compra.setCliente(cliente);
+        compra.setPagamento(pagamento);
+
+        compraRepo.saveAndFlush(compra);
+
+        for (ItensCompra it: itensCompraList){
+            it.setCompra(compra);
+            itensCompraRepo.saveAndFlush(it);
+        }
+
+        itensCompraList = new ArrayList<>();
+        compra = new Compra();
+
+        return mv;
+
+
     }
 
 
